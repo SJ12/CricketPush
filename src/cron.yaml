@@ -1,0 +1,4 @@
+cron:
+- description: check for news updates
+  url: /news
+  schedule: every 2 hours from 3:52 to 13:28
