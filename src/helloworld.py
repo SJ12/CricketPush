@@ -8,10 +8,11 @@ import logging
 
 
 def send_message(message):
-    grp_api_uri = 'http://api.txtweb.com/groups?action=group_push&txtweb-group-id=twgroup-54911cc5e4b07d3288a8f9fd&txtweb-message=<html><head><meta%20name=txtweb-appkey%20content="d1ce380e-f94d-4288-9d73-3efef6d58df7"%20></head><body>' + urllib.quote_plus(message) + "</body></html>"
-    push_api_uri = "http://scripush.appspot.com/servletex?message=" + urllib.quote_plus(message)
-    logging.info(urllib.urlopen(grp_api_uri).read())
-    logging.info(urllib.urlopen(push_api_uri).read())
+    # grp_api_uri = 'http://api.txtweb.com/groups?action=group_push&txtweb-group-id=twgroup-54911cc5e4b07d3288a8f9fd&txtweb-message=<html><head><meta%20name=txtweb-appkey%20content="d1ce380e-f94d-4288-9d73-3efef6d58df7"%20></head><body>' + urllib.quote_plus(message) + "</body></html>"
+    # push_api_uri = "http://scripush.appspot.com/servletex?message=" + urllib.quote_plus(message)
+    # logging.info(urllib.urlopen(grp_api_uri).read())
+    # logging.info(urllib.urlopen(push_api_uri).read())
+    print "TO be implemented with twilio"
     
 class LastUpdated(db.Model):
     """Sub model for representing an author."""
