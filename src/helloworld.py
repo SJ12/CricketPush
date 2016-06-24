@@ -5,6 +5,12 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 import logging
+import re
+
+import sys
+sys.path.insert(0, 'lib')
+
+from twilio_sms import send_sms
 
 
 def send_message(message):
@@ -12,7 +18,11 @@ def send_message(message):
     # push_api_uri = "http://scripush.appspot.com/servletex?message=" + urllib.quote_plus(message)
     # logging.info(urllib.urlopen(grp_api_uri).read())
     # logging.info(urllib.urlopen(push_api_uri).read())
-    print "TO be implemented with twilio"
+    ## removing html tags
+    cleanr =re.compile('<.*?>')
+    cleantext = re.sub(cleanr,'', message)
+    status=send_sms(cleantext,'+919620950489')
+    logging.info(status)
     
 class LastUpdated(db.Model):
     """Sub model for representing an author."""
@@ -25,7 +35,7 @@ class NewsPage(webapp.RequestHandler):
         data = json.loads(urllib.urlopen("http://mapps.cricbuzz.com/cricbuzz-android/news/index").read())
         
         if self.has_updated(data.get('stories')[0].get('header').get('date')):
-            message = data.get('stories')[0].get('hline').upper() + "<br><br>" + data.get('stories')[0].get('intro')
+            message = data.get('stories')[0].get('hline').upper() + "\n\n" + data.get('stories')[0].get('intro')
             logging.info(message)
             send_message(message)
         else:
@@ -44,10 +54,6 @@ class NewsPage(webapp.RequestHandler):
             LastUpdated_query.news_timestamp = time_stamp
             LastUpdated_query.put()
             return True
-        
-    
-
-
 
 class MainPage(webapp.RequestHandler):
 
@@ -91,8 +97,8 @@ class MainPage(webapp.RequestHandler):
                     bowlobj = ele.get('miniscore').get('nsbowler')                   
                     nsbowler = bowlobj.get('fullName') + ": " + bowlobj.get("overs") + "-" + bowlobj.get("maidens") + "-" + bowlobj.get("runs") + "-" + bowlobj.get("wicket")                      
                     
-                    scores += str(bowlteamname) + " - " + str(bowlteamscore) + "<br>" + str(batteamname) + " - " + str(batteamscore) 
-                    scores += "<br>" + striker + "<br>" + non_striker + "<br>" + bowler + "<br>" + nsbowler + "<br>" + str(status)
+                    scores += str(bowlteamname) + " - " + str(bowlteamscore) + "\n" + str(batteamname) + " - " + str(batteamscore) 
+                    scores += "\n" + striker + "\n" + non_striker + "\n" + bowler + "\n" + nsbowler + "\n" + str(status)
                     break
         logging.info(header + " " + scores)            
         return header, scores
@@ -124,7 +130,7 @@ class MainPage(webapp.RequestHandler):
                     scores = ''
                 
                 header = data.get("sub").upper() + header
-                message = header + "<br>" + msg + "" + scores
+                message = header + "\n" + msg + "" + scores
                 
                 send_message(message)
             else:
