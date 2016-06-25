@@ -124,15 +124,14 @@ class MainPage(webapp.RequestHandler):
                 else:
                     message=None
             if message: 
-                header, scores = self.get_scores(data.get('matchId'))           
-                if sub in ['Toss', 'News']:
-#                     logging.info(sub)
-                    scores = ''
-                
-                header = data.get("sub").upper() + header
-                message = header + "\n" + msg + "" + scores
-                
-                send_message(message)
+#                 header, scores = self.get_scores(data.get('matchId'))
+#                 if sub in ['Toss', 'News']:
+# #                     logging.info(sub)
+#                     scores = ''
+#                 header = data.get("sub").upper() + header
+#                 message = header + "\n" + msg + "" + scores
+                message = msg
+                send_message(message[:130])
             else:
                 logging.info("Ignoring irrelevant updates")
         else:
