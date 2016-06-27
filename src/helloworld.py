@@ -131,7 +131,7 @@ class MainPage(webapp.RequestHandler):
 #                 header = data.get("sub").upper() + header
 #                 message = header + "\n" + msg + "" + scores
                 message = msg
-                send_message(message[:130])
+                send_message(message)
             else:
                 logging.info("Ignoring irrelevant updates")
         else:
