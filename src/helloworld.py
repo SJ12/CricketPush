@@ -130,8 +130,11 @@ class MainPage(webapp.RequestHandler):
 #                     scores = ''
 #                 header = data.get("sub").upper() + header
 #                 message = header + "\n" + msg + "" + scores
-                message = msg
-                send_message(message)
+                # message = msg
+                if 'county' not in data.get('url').lower():
+                    send_message(message)
+                else:
+                    logging.info('ignoring county updates')
             else:
                 logging.info("Ignoring irrelevant updates")
         else:
