@@ -98,17 +98,17 @@ class MainPage(webapp.RequestHandler):
                     nsbowler = bowlobj.get('fullName') + ": " + bowlobj.get("overs") + "-" + bowlobj.get("maidens") + "-" + bowlobj.get("runs") + "-" + bowlobj.get("wicket")                      
                     
                     scores += str(bowlteamname) + " - " + str(bowlteamscore) + "\n" + str(batteamname) + " - " + str(batteamscore) 
-                    scores += "\n" + striker + "\n" + non_striker + "\n" + bowler + "\n" + nsbowler + "\n" + str(status)
+                    # scores += "\n" + striker + "\n" + non_striker + "\n" + bowler + "\n" + nsbowler + "\n" + str(status)
                     break
         logging.info(header + " " + scores)            
-        return header, scores
+        return scores
     
     def get(self):
         self.response.headers['Content-Type'] = 'text/html'
         
         data = json.loads(urllib.urlopen("http://sms.cricbuzz.com/chrome/alert.json").read())
         logging.info(data)
-#         scores= get_scores(data.get('matchId'))
+        scores= self.get_scores(data.get('matchId'))
         sub = data.get('sub')
         
         if self.has_updated(data.get('time')):          
@@ -131,6 +131,7 @@ class MainPage(webapp.RequestHandler):
 #                 header = data.get("sub").upper() + header
 #                 message = header + "\n" + msg + "" + scores
                 # message = msg
+                message=message+"\n"+scores
                 if 'county' not in data.get('url').lower():
                     send_message(message)
                 else:
