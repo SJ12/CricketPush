@@ -19,7 +19,7 @@ def send_message(message):
     # logging.info(urllib.urlopen(grp_api_uri).read())
     # logging.info(urllib.urlopen(push_api_uri).read())
     ## removing html tags
-    comment_uri = "http://footballpush.appspot.com/shouts?cricket=1&name=LiveScores&shout=" + urllib.quote_plus(message)
+    comment_uri = "http://footballpush.appspot.com/shouts?cricket=1&name=LiveScores&shout=111" + urllib.quote_plus(message)
     cleanr =re.compile('<.*?>')
     cleantext = re.sub(cleanr,'', message)
     status=send_sms(cleantext,'+919620950489')
