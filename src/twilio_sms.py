@@ -4,9 +4,9 @@ from twilio.rest.client import TwilioRestClient
  
 #----------------------------------------------------------------------
 def send_sms(msg, to):
-    sid = "AC97b5731ee0f9dea61ec0abccb3b6fea6"
-    auth_token = "2d58decb8e9a842132192cc59edd8b3d"
-    twilio_number = "+1 201-244-4640"
+    sid = "ACa88c986da84d12902419aeef203a8bac"
+    auth_token = "d444c203619e8c114b29f9e32f3d1cef"
+    twilio_number = "+14806464325"
  
     client = TwilioRestClient(sid, auth_token)
  
