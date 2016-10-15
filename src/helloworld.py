@@ -70,10 +70,6 @@ class MainPage(webapp.RequestHandler):
         scores, header = '', ''
         for ele in data:
             logging.info(ele.get("matchId") + " " + match_id)
-            teams = ['IND','PAK','ENG','AUS','WI',"NZ",'BAN','RSA','ZIM','AFG']
-
-            if ele.get('datapath') is not in teams:
-                continue
 
             if str(ele.get("matchId")) == str(match_id):
                 if ele.get('header').get('type') == "TEST":
@@ -115,6 +111,10 @@ class MainPage(webapp.RequestHandler):
         
         data = json.loads(urllib.urlopen("http://sms.cricbuzz.com/chrome/alert.json").read())
         logging.info(data)
+        teams = ['IND','PAK','ENG','AUS','WI',"NZ",'BAN','RSA','ZIM','AFG']
+        if not any(team+" v" in data.get('header') or "v "+team in data.get('header')for team in teams):
+            return
+               
         scores= self.get_scores(data.get('matchId'))
         sub = data.get('sub')
         
